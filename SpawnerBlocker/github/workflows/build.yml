@@ -1,0 +1,30 @@
+name: Build Minecraft Plugin
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: 17
+          distribution: temurin
+
+      - name: Build with Maven
+        run: mvn clean package
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: SpawnerBlocker.jar
+          path: target/SpawnerBlocker-1.0.jar
